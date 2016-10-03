@@ -1,0 +1,16 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{49072B14-463D-FF3A-84C3-CD8DC1D7F9C7}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "CelestialBody",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	]
+}
