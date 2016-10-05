@@ -31,8 +31,10 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Star")
 	FVector force;
 
+	UPROPERTY()
+	class AUniverse* universe;
 
-
+	void OnAddedToUniverse(class AUniverse* universe);
 	void CalcAccumulatedForce();
 	void UpdatePosition(float deltaTime);
 };
