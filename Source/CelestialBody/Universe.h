@@ -19,20 +19,27 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Transient, Category = "Universe")
 	TArray<class AStar*> stars;
 
+	/* How many years does 1 second in simulation equal to. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Universe")
+	float yearsEqualToOneSec = 1.f;
+
+	/* fixed tick interval (in simulation years). */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Universe")
 	float fixedTickInterval = 0.01f;
-
-	/* How many days does 1 second in simulation equal to. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Universe")
-	float daysEqualToOneSec = 365;
 
 	/* How many unreal units (or centi meters) in simulation does 1AU equal to. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Universe")
 	float unrealUnitsEqualToOneAU = 100.f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Universe")
+	bool realTimeSimulation = true;
+
+	UFUNCTION(BlueprintCallable, Category = "Universe")
+	void Simulate(float years);
+
 private:
-	float totalTickDeltaTime = 0.f;
-	bool stop = false;
+	float totalTickYears = 0.f;
+	
 
 public:
 	float UU2AU(float unrealUnit) const { return unrealUnit / unrealUnitsEqualToOneAU; }

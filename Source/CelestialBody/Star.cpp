@@ -27,7 +27,7 @@ void AStar::OnAddedToUniverse(AUniverse* theUniverse)
 	universe = theUniverse;
 
 	universe->stars.AddUnique(this);
-	position = universe->UU2AU(GetActorLocation());
+	position = universe->UU2AU(GetActorLocation()) / positionScale;
 }
 
 
@@ -59,6 +59,6 @@ void AStar::UpdatePosition(float deltaTime)
 
 		//UE_LOG(LogTemp, Log, TEXT("%s: acc: %s, velocity: %s"), *GetActorLabel(), *acceleration.ToString(), *velocity.ToString());
 
-		SetActorLocation(universe->AU2UU(position));
+		SetActorLocation(universe->AU2UU(position * positionScale));
 	}
 }

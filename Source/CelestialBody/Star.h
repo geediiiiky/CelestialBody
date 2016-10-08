@@ -31,6 +31,11 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Star")
 	FVector force;
 
+	/* the scale of this body's position. I.E. setting this to 0.1 will place the star whose actual location is (5au, 5au, 0au) to (0.5au, 0.5au, 0). 
+	The ue unit transform from AU set in the universe will still be applied on top of that. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Star")
+	float positionScale = 1.f;
+
 	UPROPERTY()
 	class AUniverse* universe;
 

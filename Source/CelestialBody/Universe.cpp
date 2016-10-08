@@ -26,18 +26,21 @@ void AUniverse::BeginPlay()
 	}
 }
 
-void AUniverse::Tick( float DeltaTime )
+void AUniverse::Tick(float DeltaTime)
 {
-	Super::Tick( DeltaTime );
+	Super::Tick(DeltaTime);
 
-	if (stop)
+	if (realTimeSimulation)
 	{
-		return;
+		Simulate(DeltaTime * yearsEqualToOneSec);
 	}
+}
 
-	totalTickDeltaTime += (DeltaTime * daysEqualToOneSec / 365.f);
+void AUniverse::Simulate(float years)
+{
+	totalTickYears += years;
 
-	while (totalTickDeltaTime > fixedTickInterval)
+	while (totalTickYears > fixedTickInterval)
 	{
 		for (auto star : stars)
 		{
@@ -55,21 +58,22 @@ void AUniverse::Tick( float DeltaTime )
 			}
 		}
 
-		totalTickDeltaTime -= fixedTickInterval;
+		totalTickYears -= fixedTickInterval;
 	}
 
 	// collision check
-	for (auto i = 0; !stop && i < stars.Num(); ++i)
-	{
-		for (auto j = i + 1; !stop && j < stars.Num(); ++j)
-		{
-			auto distance = UU2AU((stars[i]->GetActorLocation() - stars[j]->GetActorLocation()).Size());	// do it properly
-			const auto combinedRadius = 0.00001f;	// sum of two stars' radius
-			if (distance < combinedRadius)
-			{
-				stop = true;
-			}
-		}
-	}
+	//for (auto i = 0; !stop && i < stars.Num(); ++i)
+	//{
+	//	for (auto j = i + 1; !stop && j < stars.Num(); ++j)
+	//	{
+	//		auto distance = UU2AU((stars[i]->GetActorLocation() - stars[j]->GetActorLocation()).Size());	// do it properly
+	//		const auto combinedRadius = 0.00001f;	// sum of two stars' radius
+	//		if (distance < combinedRadius)
+	//		{
+	//			stop = true;
+	//		}
+	//	}
+	//}
 }
+
 
