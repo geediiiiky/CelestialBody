@@ -32,7 +32,16 @@ void AUniverse::Tick(float DeltaTime)
 
 	if (realTimeSimulation)
 	{
-		Simulate(DeltaTime * yearsEqualToOneSec);
+		const auto simulateYears = simulationYearsPerSecond * DeltaTime;
+
+		if (totalTickYears > simulateYears)
+		{
+			Simulate(0);	// already got enough food on my plate
+		}
+		else
+		{
+			Simulate(simulateYears);
+		}
 	}
 }
 
@@ -40,7 +49,9 @@ void AUniverse::Simulate(float years)
 {
 	totalTickYears += years;
 
-	while (totalTickYears > fixedTickInterval)
+	const auto startTime = FPlatformTime::Seconds();
+
+	while (totalTickYears > fixedSimulationYearsInterval)
 	{
 		for (auto star : stars)
 		{
@@ -54,11 +65,20 @@ void AUniverse::Simulate(float years)
 		{
 			if (star)
 			{
-				star->UpdatePosition(fixedTickInterval);
+				star->UpdatePosition(fixedSimulationYearsInterval);
 			}
 		}
 
-		totalTickYears -= fixedTickInterval;
+		totalTickYears -= fixedSimulationYearsInterval;
+
+		const auto now = FPlatformTime::Seconds();
+		const float timeTaken = now - startTime;
+
+		const auto MIN_FPS = 10.f;
+		if (timeTaken >= 1.f / MIN_FPS)	// so I am expecting at least MIN_FPS
+		{
+			break;
+		}
 	}
 
 	// collision check

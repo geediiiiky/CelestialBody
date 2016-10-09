@@ -21,15 +21,15 @@ public:
 
 	/* How many years does 1 second in simulation equal to. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Universe")
-	float yearsEqualToOneSec = 1.f;
+	float simulationYearsPerSecond = 1.f;
 
 	/* fixed tick interval (in simulation years). */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Universe")
-	float fixedTickInterval = 0.01f;
+	float fixedSimulationYearsInterval = 0.01f;
 
 	/* How many unreal units (or centi meters) in simulation does 1AU equal to. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Universe")
-	float unrealUnitsEqualToOneAU = 100.f;
+	float unrealUnitsPerAU = 100.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Universe")
 	bool realTimeSimulation = true;
@@ -42,9 +42,9 @@ private:
 	
 
 public:
-	float UU2AU(float unrealUnit) const { return unrealUnit / unrealUnitsEqualToOneAU; }
-	FVector UU2AU(const FVector& unrealUnitVec) const { return unrealUnitVec / unrealUnitsEqualToOneAU; }
+	float UU2AU(float unrealUnit) const { return unrealUnit / unrealUnitsPerAU; }
+	FVector UU2AU(const FVector& unrealUnitVec) const { return unrealUnitVec / unrealUnitsPerAU; }
 
-	float AU2UU(float au) const { return au * unrealUnitsEqualToOneAU; }
-	FVector AU2UU(const FVector& auVec) const { return auVec * unrealUnitsEqualToOneAU; }
+	float AU2UU(float au) const { return au * unrealUnitsPerAU; }
+	FVector AU2UU(const FVector& auVec) const { return auVec * unrealUnitsPerAU; }
 };
